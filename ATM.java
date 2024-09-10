@@ -24,12 +24,10 @@ class MyATM {
 class GetATM extends Thread {
 	
 	MyATM a;
-	String name;
 	int amount;
 	
 	GetATM(MyATM a) {
 		this.a=a;
-		this.name=name;
 		this.amount=amount;
 	}
 	public void run() {
@@ -39,7 +37,6 @@ class GetATM extends Thread {
 class GetATM1 extends Thread {
 	
 	MyATM a;
-	String name;
 	int amount;
 	
 	GetATM1(MyATM a) {
@@ -48,7 +45,6 @@ class GetATM1 extends Thread {
 	}
 	public void run() {
 		a.checkWithDraw("saiyogesh",1000);
-		
 	}
 }
 public class ATM {
@@ -59,7 +55,6 @@ public class ATM {
 		GetATM1 c2=new GetATM1(a);
 		c1.start();
 		c2.start();
-		
+		System.out.println("git pull");
 	}
-
 }
