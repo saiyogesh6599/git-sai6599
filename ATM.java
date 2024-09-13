@@ -26,7 +26,7 @@ class GetATM extends Thread {
 	MyATM a;
 	int amount;
 	
-	GetATM(MyATM a) {
+	GetATM(MyATM a, int amount) {
 		this.a=a;
 		this.amount=amount;
 	}
