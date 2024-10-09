@@ -2,32 +2,36 @@ package com.springboot.mvc.demo.springboot.dao.impl.dto;
 
 import java.time.LocalDate;
 
-import org.springframework.stereotype.Controller;
+public class EmployeeDTO {
 
-
-public class employeeDTO {
-	
 	private Long id;
-	
 	private String name;
-	
 	private String email;
-	
 	private LocalDate dateOfJoining;
-	
 	private boolean isActive;
-	
-	public employeeDTO() {
-		
-	}
-	
-//	@Override
-//	public String toString() {
-//		return "employeeDTO [id=" + id + ", name=" + name + ", email=" + email + ", dateOfJoining=" + dateOfJoining
-//				+ ", isActive=" + isActive + "]";
-//	}
 
-	public employeeDTO(Long id, String name, String email, LocalDate dateOfJoining, boolean isActive) {
+	public EmployeeDTO() {
+
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("EmployeeDTO [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", dateOfJoining=");
+		builder.append(dateOfJoining);
+		builder.append(", isActive=");
+		builder.append(isActive);
+		builder.append("]");
+		return builder.toString();
+	}
+
+	public EmployeeDTO(Long id, String name, String email, LocalDate dateOfJoining, boolean isActive) {
 		super();
 		this.id = id;
 		this.name = name;
