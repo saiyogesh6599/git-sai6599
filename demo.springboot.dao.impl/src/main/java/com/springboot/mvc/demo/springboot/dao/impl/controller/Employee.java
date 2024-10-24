@@ -2,10 +2,13 @@ package com.springboot.mvc.demo.springboot.dao.impl.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +35,12 @@ public class Employee {
 	}
 
 	@GetMapping("/{employeeId}")
-	public Optional<EmployeeDTO> getEmployeeById(@PathVariable(name = "employeeId") Long Id) {
-		return EmpService.getEmployeeById(Id);
+	public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable(name = "employeeId") Long Id) {
+		Optional<EmployeeDTO> employeeDTO=EmpService.getEmployeeById(Id);
+		return employeeDTO
+				.map(employeeDTO1 -> ResponseEntity.ok(employeeDTO1))
+				.orElseThrow(()-> new NoSuchElementException("Resource not found"));
 	}
-
 	@GetMapping
 	public List<EmployeeDTO> getAllEmployees(@RequestParam(required = false, name = "inputAge") Integer age,
 			@RequestParam(required = false) String sortBy) {
