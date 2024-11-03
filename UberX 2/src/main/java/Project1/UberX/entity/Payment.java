@@ -3,8 +3,12 @@ package Project1.UberX.entity;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -13,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Payment {
 
 	@jakarta.persistence.Id
@@ -26,6 +31,12 @@ public class Payment {
 	private Ride ride;
 	
 	private Double amount;
+	
+	@CreatedDate
+	private LocalDateTime createdDate;
+	
+	@LastModifiedDate
+	private LocalDateTime lastModified;
 	
 	public Long getId() {
 		return Id;

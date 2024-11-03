@@ -3,14 +3,19 @@ package Project1.UberX.entity;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class WalletTransactions {
 
 	@jakarta.persistence.Id
@@ -22,9 +27,15 @@ public class WalletTransactions {
 	private TransactionType transactionType;
 
 	private TransactionMethod transactionMethod;
-	
+
 	private String transactionId;
-	
+
+	@CreatedDate
+	private LocalDateTime createdDate;
+
+	@LastModifiedDate
+	private LocalDateTime lastModified;
+
 	public String getTransactionId() {
 		return transactionId;
 	}
@@ -39,12 +50,12 @@ public class WalletTransactions {
 
 	@OneToOne
 	private Ride ride;
-	
+
 	@CreationTimestamp
 	private LocalDateTime timeStamp;
-	
+
 	@OneToOne
-	@JoinColumn (name = "wallet", nullable = false)
+	@JoinColumn(name = "wallet", nullable = false)
 	private Wallet wallet;
 
 	public Long getId() {

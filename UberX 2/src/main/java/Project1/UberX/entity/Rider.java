@@ -1,16 +1,26 @@
 package Project1.UberX.entity;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "rider_app")
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
+@Builder
 public class Rider {
 
 	@jakarta.persistence.Id
@@ -23,8 +33,17 @@ public class Rider {
 
 	private Double rating;
 
+	@CreatedDate
+	private LocalDateTime createdDate;
+
+	@LastModifiedDate
+	private LocalDateTime lastModified;
+
 	public Long getId() {
 		return id;
+	}
+
+	public Rider() {
 	}
 
 	public Rider(Long id, Users user, Double rating) {

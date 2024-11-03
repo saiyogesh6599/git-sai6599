@@ -8,4 +8,6 @@ import Project1.UberX.entity.Users;
 @Repository
 public interface UsersRepo  extends JpaRepository<Users, Long>{
 
+	Users findByEmail(String email);
+
 }
