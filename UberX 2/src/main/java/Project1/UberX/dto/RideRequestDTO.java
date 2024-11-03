@@ -2,8 +2,6 @@ package Project1.UberX.dto;
 
 import java.time.LocalDateTime;
 
-import org.locationtech.jts.geom.Point;
-
 import Project1.UberX.entity.Driver;
 import Project1.UberX.entity.PaymentMethod;
 import Project1.UberX.entity.RideStatus;
@@ -15,31 +13,27 @@ public class RideRequestDTO {
 
 	private Long Id;
 
-	private Point pickUpLocation;
+	private PointDTO pickUpLocation;
 
-	private Point dropOffLocation;
+	private PointDTO dropOffLocation;
 
-	public RideRequestDTO() {
-	}
+	private Driver driver;
+
+	private PaymentMethod paymentMethod;
+
+	private RideStatus rideStatus;
+
+	private Double fare;
+
+	private LocalDateTime startedAt;
+
+	private LocalDateTime endedAt;
 
 	private LocalDateTime createdTime;
 
 	private Rider rider;
 
-	public RideRequestDTO(Long id, Point pickUpLocation, Point dropOffLocation, LocalDateTime createdTime, Rider rider,
-			Driver driver, PaymentMethod paymentMethod, RideStatus rideStatus, Double fare, LocalDateTime startedAt,
-			LocalDateTime endedAt) {
-		Id = id;
-		this.pickUpLocation = pickUpLocation;
-		this.dropOffLocation = dropOffLocation;
-		this.createdTime = createdTime;
-		this.rider = rider;
-		this.driver = driver;
-		this.paymentMethod = paymentMethod;
-		this.rideStatus = rideStatus;
-		this.fare = fare;
-		this.startedAt = startedAt;
-		this.endedAt = endedAt;
+	public RideRequestDTO() {
 	}
 
 	public Long getId() {
@@ -50,36 +44,20 @@ public class RideRequestDTO {
 		Id = id;
 	}
 
-	public Point getPickUpLocation() {
+	public PointDTO getPickUpLocation() {
 		return pickUpLocation;
 	}
 
-	public void setPickUpLocation(Point pickUpLocation) {
+	public void setPickUpLocation(PointDTO pickUpLocation) {
 		this.pickUpLocation = pickUpLocation;
 	}
 
-	public Point getDropOffLocation() {
+	public PointDTO getDropOffLocation() {
 		return dropOffLocation;
 	}
 
-	public void setDropOffLocation(Point dropOffLocation) {
+	public void setDropOffLocation(PointDTO dropOffLocation) {
 		this.dropOffLocation = dropOffLocation;
-	}
-
-	public LocalDateTime getCreatedTime() {
-		return createdTime;
-	}
-
-	public void setCreatedTime(LocalDateTime createdTime) {
-		this.createdTime = createdTime;
-	}
-
-	public Rider getRider() {
-		return rider;
-	}
-
-	public void setRider(Rider rider) {
-		this.rider = rider;
 	}
 
 	public Driver getDriver() {
@@ -130,15 +108,36 @@ public class RideRequestDTO {
 		this.endedAt = endedAt;
 	}
 
-	private Driver driver;
+	public LocalDateTime getCreatedTime() {
+		return createdTime;
+	}
 
-	private PaymentMethod paymentMethod;
+	public RideRequestDTO(Long id, PointDTO pickUpLocation, PointDTO dropOffLocation, Driver driver,
+			PaymentMethod paymentMethod, RideStatus rideStatus, Double fare, LocalDateTime startedAt,
+			LocalDateTime endedAt, LocalDateTime createdTime, Rider rider) {
+		Id = id;
+		this.pickUpLocation = pickUpLocation;
+		this.dropOffLocation = dropOffLocation;
+		this.driver = driver;
+		this.paymentMethod = paymentMethod;
+		this.rideStatus = rideStatus;
+		this.fare = fare;
+		this.startedAt = startedAt;
+		this.endedAt = endedAt;
+		this.createdTime = createdTime;
+		this.rider = rider;
+	}
 
-	private RideStatus rideStatus;
+	public void setCreatedTime(LocalDateTime createdTime) {
+		this.createdTime = createdTime;
+	}
 
-	private Double fare;
+	public Rider getRider() {
+		return rider;
+	}
 
-	private LocalDateTime startedAt;
+	public void setRider(Rider rider) {
+		this.rider = rider;
+	}
 
-	private LocalDateTime endedAt;
 }

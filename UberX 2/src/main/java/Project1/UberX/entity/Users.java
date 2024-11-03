@@ -1,10 +1,16 @@
 package Project1.UberX.entity;
 
+import java.time.LocalDateTime;
 import java.util.Set;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -15,6 +21,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Users")
+@EntityListeners(AuditingEntityListener.class)
 public class Users {
 
 	@Id
@@ -31,6 +38,12 @@ public class Users {
 	@ElementCollection(fetch = FetchType.LAZY)
 	@Enumerated(EnumType.STRING)
 	private Set<Roles> roles;
+	
+	@CreatedDate
+	private LocalDateTime createdDate;
+	
+	@LastModifiedDate
+	private LocalDateTime lastModified;
 
 	// Constructor with corrected parameter name
 	public Users(Long id, String username, String email, String password) {
