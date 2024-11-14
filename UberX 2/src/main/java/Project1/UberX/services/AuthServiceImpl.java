@@ -26,6 +26,7 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
+	@org.springframework.transaction.annotation.Transactional
 	public UserDTO signup(SignUPDTO signUPDTO) {
 		Users user = userRepo.findByEmail(signUPDTO.getEmail());
 		if (user != null) {
@@ -34,12 +35,11 @@ public class AuthServiceImpl implements AuthService {
 		Users mappedUser = modelMapper.map(signUPDTO, Users.class);
 		user.setRoles(Set.of(Roles.RIDER));
 		Users savedUser = userRepo.save(user);
-		
-		//create user
+
+		// create user
 		riderService.createNewRider(savedUser);
-		//TODO add Wallet Service rela
-		
-		
+		// TODO add Wallet Service rela
+
 		return modelMapper.map(savedUser, UserDTO.class);
 	}
 

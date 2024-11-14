@@ -1,6 +1,7 @@
 package Project1.UberX.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import Project1.UberX.dto.RideDTO;
 import Project1.UberX.dto.RideRequestDTO;
@@ -18,7 +19,8 @@ public interface RiderService {
 
 	List<RideDTO> getAllMyRide();
 	
-	 Rider createNewRider(Users user);
+	Rider createNewRider(Users user);
 	
+	Optional<Rider> getCurrentRider(); 
 	
 }

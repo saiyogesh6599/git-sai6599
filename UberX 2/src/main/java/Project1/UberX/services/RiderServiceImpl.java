@@ -1,6 +1,7 @@
 package Project1.UberX.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import Project1.UberX.Strategies.DriverMatchingStrategy;
 import Project1.UberX.Strategies.RideFareCalStartegy;
+import Project1.UberX.Strategies.RideStrategyManager;
 import Project1.UberX.dto.RideDTO;
 import Project1.UberX.dto.RideRequestDTO;
 import Project1.UberX.dto.RiderDTO;
@@ -16,7 +18,6 @@ import Project1.UberX.entity.RideRequest;
 import Project1.UberX.entity.RideRequestStatus;
 import Project1.UberX.entity.Rider;
 import Project1.UberX.entity.Users;
-import Project1.UberX.repository.RideRepo;
 import Project1.UberX.repository.RideRequestRepo;
 import Project1.UberX.repository.RiderRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,10 @@ public class RiderServiceImpl implements RiderService {
 
 	private RideRequestRepo rideRequestRepo;
 	
+	private RideStrategyManager rideStartegyManager;
+	
+	private Rider rider;
+	
 	private RiderRepo riderRepo;
 
 	private static final Logger log = LoggerFactory.getLogger(RiderServiceImpl.class);
@@ -48,7 +53,7 @@ public class RiderServiceImpl implements RiderService {
 		double fare = rideFareCalStartegy.calaculateFare(rideRequest);
 		rideRequest.setFare(fare);
 		RideRequest saveRideRequest = rideRequestRepo.save(rideRequest);
-		driverMatchingStartegy.findDriver(rideRequest);
+		rideStartegyManager.driverMatchingStartegy(rider.getRating()).findDriver(saveRideRequest);
 		return modelMapper.map(saveRideRequest, RideRequestDTO.class);
 	}
 
@@ -75,6 +80,12 @@ public class RiderServiceImpl implements RiderService {
 	    rider.setUser(users);
 	    rider.setRating(0.0);
 	    return riderRepo.save(rider);
+	}
+
+	@Override
+	public Optional<Rider> getCurrentRider() {
+		// TODO implement Spring security support
+		return riderRepo.findById(1L);
 	}
 
 }
