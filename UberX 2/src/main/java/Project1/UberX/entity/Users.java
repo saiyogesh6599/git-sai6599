@@ -20,7 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "user_app")
 @EntityListeners(AuditingEntityListener.class)
 public class Users {
 
