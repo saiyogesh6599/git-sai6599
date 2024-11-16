@@ -2,11 +2,10 @@ package Project1.UberX.services;
 
 import java.util.List;
 
-import org.locationtech.jts.geom.Point;
-
 import Project1.UberX.dto.DriverDTO;
 import Project1.UberX.dto.RideDTO;
 import Project1.UberX.dto.RiderDTO;
+import Project1.UberX.entity.Driver;
 
 public interface DriverService {
 
@@ -18,14 +17,14 @@ public interface DriverService {
 	
 	RiderDTO rateRider(Long rideId, Double rating);
 	
-	RideDTO acceptRide(Long rideId);
+	RideDTO acceptRide(Long rideRequestId);
 	
 	DriverDTO getMyProfile();
 	
 	List<RideDTO> getAllMyRide();
 	
-	double calculateDistance(Point src, Point dest);
-	
-	
+	Driver getCurrentDriver();
+
+	RideDTO startRide(Long rideId, String otp);	
 	
 }

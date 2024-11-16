@@ -1,20 +1,34 @@
 package Project1.UberX.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import org.locationtech.jts.geom.Point;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
 
 import Project1.UberX.dto.DriverDTO;
 import Project1.UberX.dto.RideDTO;
 import Project1.UberX.dto.RiderDTO;
-import lombok.Data;
+import Project1.UberX.entity.Driver;
+import Project1.UberX.entity.Ride;
+import Project1.UberX.entity.RideRequest;
+import Project1.UberX.entity.RideRequestStatus;
+import Project1.UberX.entity.RideStatus;
+import Project1.UberX.repository.DriverRepo;
+import jakarta.transaction.Transactional;
 
 @Service
 public class DriverServiceOSRMImpl implements DriverService {
 
-	private final String OSRM_API_BASE_URL = "http://router.project-osrm.org/route/v1/driving/";
+	private RideRequestService rideRequestService;
+	private DriverRepo driverRepo;
+	private RiderService riderService;
+	private ModelMapper modelMapper;
+	private RideService rideService;
+
+	public DriverServiceOSRMImpl(RideRequestService rideRequestService) {
+		this.rideRequestService = rideRequestService;
+	}
 
 	@Override
 	public RideDTO cancelRide(Long rideId) {
@@ -41,9 +55,28 @@ public class DriverServiceOSRMImpl implements DriverService {
 	}
 
 	@Override
-	public RideDTO acceptRide(Long rideId) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public RideDTO acceptRide(Long rideRequestId) {
+		RideRequest rideRequest = rideRequestService.findRideRequestById(rideRequestId);
+		if (!rideRequest.getRideRequestStatus().equals(RideRequestStatus.PENDING)) {
+			throw new RuntimeException("RideRequst cannot be accepted");
+		}
+
+		Driver currentDriver = getCurrentDriver();
+		if (!currentDriver.getAvailable()) {
+			throw new RuntimeException("Driver not available");
+		}
+		currentDriver.setAvailable(false);
+		Driver saveDriver = driverRepo.save(currentDriver);
+
+		Ride ride = rideService.createNewRide(rideRequest, saveDriver);
+
+		return modelMapper.map(ride, RideDTO.class);
+	}
+
+	@Override
+	public Driver getCurrentDriver() {
+		return driverRepo.findById(2L).orElseThrow(() -> new RuntimeException("Driver with ID 2L not found"));
 	}
 
 	@Override
@@ -59,41 +92,40 @@ public class DriverServiceOSRMImpl implements DriverService {
 	}
 
 	@Override
-	public double calculateDistance(Point src, Point dest) {
+	public RideDTO startRide(Long rideId, String otp) {
+	    // Fetch the ride and validate its existence
+	    Ride ride = riderService.getRideById(rideId);
+	    if (ride == null) {
+	        throw new IllegalArgumentException("Ride not found");
+	    }
 
-		try {
-			String uri = src.getX() + "," + src.getY() + "," + dest.getX() + "," + dest.getY();
-			OSRMResponseDTO responseDto = RestClient.builder().baseUrl(OSRM_API_BASE_URL).build().get().uri(uri)
-					.retrieve().body(OSRMResponseDTO.class);
-			return responseDto.getRoutes().get(0).getDistance() / 1000.0;
-		} catch (Exception e) {
-			throw new RuntimeException("Error getting the data from OSRM"+e.getMessage());
-		}
+	    // Fetch the current driver and validate
+	    Driver driver = getCurrentDriver();
+	    if (driver == null) {
+	        throw new IllegalArgumentException("Driver not authenticated");
+	    }
+
+	    if (!driver.equals(ride.getDriver())) {
+	        throw new IllegalArgumentException("Driver cannot start this ride");
+	    }
+
+	    // Validate ride status
+	    if (!RideStatus.CONFIRMED.equals(ride.getRideStatus())) {
+	        throw new IllegalArgumentException("Ride is not confirmed");
+	    }
+
+	    // Validate OTP
+	    if (!otp.trim().equals(ride.getOtp().trim())) {
+	        throw new IllegalArgumentException("OTP is not valid");
+	    }
+
+	    // Update ride status and timestamp
+	    ride.setStartedAt(LocalDateTime.now());
+	    Ride updatedRide = rideService.updateRideStatus(ride, RideStatus.ONGOING);
+
+	    // Map updated ride to DTO and return
+	    return modelMapper.map(updatedRide, RideDTO.class);
 	}
 
-	@Data
-	class OSRMResponseDTO {
-		private List<OSRMRoute> routes;
 
-		public List<OSRMRoute> getRoutes() {
-			return routes;
-		}
-
-		public void setRoutes(List<OSRMRoute> routes) {
-			this.routes = routes;
-		}
-	}
-
-	@Data
-	class OSRMRoute {
-		private Double distance;
-
-		public Double getDistance() {
-			return distance;
-		}
-
-		public void setDistance(Double distance) {
-			this.distance = distance;
-		}
-	}
 }

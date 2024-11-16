@@ -52,6 +52,15 @@ public class Ride {
 
 	private LocalDateTime endedAt;
 	
+	private String Otp;
+	
+	public Ride(String otp) {
+		Otp = otp;
+	}
+
+	public String getOtp() {
+		return Otp;
+	}
 	@CreatedDate
 	private LocalDateTime createdDate;
 	
@@ -163,6 +172,9 @@ public class Ride {
 		this.fare = fare;
 		this.startedAt = startedAt;
 		this.endedAt = endedAt;
+	}
+	public  String setOtp(String generateRandomOTP) {
+		return generateRandomOTP;
 	}
 
 }
