@@ -1,17 +1,27 @@
 package Project1.UberX.services;
 
-import java.sql.Driver;
+import java.util.Random;
 
-import org.springframework.data.domain.Page;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import Project1.UberX.dto.RideRequestDTO;
+import Project1.UberX.entity.Driver;
 import Project1.UberX.entity.Ride;
+import Project1.UberX.entity.RideRequest;
+import Project1.UberX.entity.RideRequestStatus;
 import Project1.UberX.entity.RideStatus;
+import Project1.UberX.repository.RideRepo;
+import Project1.UberX.repository.RideRequestRepo;
 
 @Service
 public class RideServiceImpl implements RideService {
+
+	private RideRepo rideRepo;
+	private ModelMapper modelMapper;
+	private RideRequestRepo rideRequestRepo;
+	private RideRequestService rideRequestService;
 
 	@Override
 	public Ride getRideById(Long rideId) {
@@ -26,25 +36,37 @@ public class RideServiceImpl implements RideService {
 	}
 
 	@Override
-	public Ride createNewRide(RideRequestDTO rideRequestDTO, Driver driver) {
+	public Ride createNewRide(RideRequest rideRequest, Driver driver) {
+		rideRequest.setRideRequestStatus(RideRequestStatus.CONFIRMED);
+		Ride ride = modelMapper.map(rideRequest, Ride.class);
+		ride.setRideStatus(RideStatus.CONFIRMED);
+		ride.setDriver(driver);
+		ride.setOtp(generateRandomOTP());
+		ride.setId(null);
+		rideRequestService.update(rideRequest);
+		return rideRepo.save(ride);
+	}
+
+	@Override
+	public Ride updateRideStatus(Ride ride, RideStatus rideStatus) {
+		ride.setRideStatus(rideStatus);
+		return rideRepo.save(rideStatus);
+	}
+
+	@Override
+	public Ride getAllRidesOfRider(Long riderId, PageRequest pageRequest) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public Ride updateRideStatus(Long rideId, RideStatus rideStatus) {
-		// TODO Auto-generated method stub
-		return null;
+	private String generateRandomOTP() {
+		Random random = new Random();
+		int otp = random.nextInt();
+		return String.format("%04d", otp);
 	}
 
 	@Override
-	public Page<Ride> getAllRidesOfRider(Long riderId, PageRequest pageRequest) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Page<Driver> getAllRidesOfDriver(Long driverId, PageRequest pageRequest) {
+	public Driver getAllRidesOfDriver(Long driverId, PageRequest pageRequest) {
 		// TODO Auto-generated method stub
 		return null;
 	}

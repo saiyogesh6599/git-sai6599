@@ -11,8 +11,10 @@ import Project1.UberX.dto.UserDTO;
 import Project1.UberX.entity.Roles;
 import Project1.UberX.entity.Users;
 import Project1.UberX.repository.UsersRepo;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class AuthServiceImpl implements AuthService {
 
 	private ModelMapper modelMapper;

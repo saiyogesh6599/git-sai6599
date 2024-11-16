@@ -6,6 +6,7 @@ import java.util.Optional;
 import Project1.UberX.dto.RideDTO;
 import Project1.UberX.dto.RideRequestDTO;
 import Project1.UberX.dto.RiderDTO;
+import Project1.UberX.entity.Ride;
 import Project1.UberX.entity.Rider;
 import Project1.UberX.entity.Users;
 
@@ -21,6 +22,8 @@ public interface RiderService {
 	
 	Rider createNewRider(Users user);
 	
-	Optional<Rider> getCurrentRider(); 
+	Optional<Rider> getCurrentRider();
 	
+	Ride getRideById(Long rideId);
+
 }
