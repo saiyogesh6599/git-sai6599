@@ -20,6 +20,7 @@ public class AuthServiceImpl implements AuthService {
 	private ModelMapper modelMapper;
 	private UsersRepo userRepo;
 	private RiderService riderService;
+	private WalletService walletService;
 
 	@Override
 	public String login(String email, String password) {
@@ -37,6 +38,7 @@ public class AuthServiceImpl implements AuthService {
 		Users mappedUser = modelMapper.map(signUPDTO, Users.class);
 		user.setRoles(Set.of(Roles.RIDER));
 		Users savedUser = userRepo.save(user);
+		walletService.createNewWallet(user);
 
 		// create user
 		riderService.createNewRider(savedUser);

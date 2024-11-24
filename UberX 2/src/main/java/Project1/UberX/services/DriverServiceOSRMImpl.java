@@ -1,9 +1,10 @@
 package Project1.UberX.services;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import Project1.UberX.dto.DriverDTO;
@@ -25,6 +26,8 @@ public class DriverServiceOSRMImpl implements DriverService {
 	private RiderService riderService;
 	private ModelMapper modelMapper;
 	private RideService rideService;
+	private PaymentService paymentService;
+	private DriverService driverService;
 
 	public DriverServiceOSRMImpl(RideRequestService rideRequestService) {
 		this.rideRequestService = rideRequestService;
@@ -32,8 +35,19 @@ public class DriverServiceOSRMImpl implements DriverService {
 
 	@Override
 	public RideDTO cancelRide(Long rideId) {
-		// TODO Auto-generated method stub
-		return null;
+		Ride ride = riderService.getRideById(rideId);
+		Driver driver = getCurrentDriver();
+		if (driver == null) {
+			throw new IllegalArgumentException("Driver not authenticated");
+		}
+		if (!ride.getRideStatus().equals(RideStatus.CONFIRMED)) {
+			throw new IllegalArgumentException("ride cannot be cancelled");
+		}
+		rideService.updateRideStatus(ride, RideStatus.CANCELLED);
+		driver.setAvailable(true);
+		driverRepo.save(driver);
+		setDriverAvailability(ride.getDriver().getId(), true);
+		return modelMapper.map(ride, RideDTO.class);
 	}
 
 	@Override
@@ -43,9 +57,32 @@ public class DriverServiceOSRMImpl implements DriverService {
 	}
 
 	@Override
-	public RideDTO endRide(Long rideI) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public RideDTO endRide(Long rideId) {
+		Ride ride = riderService.getRideById(rideId);
+		if (ride == null) {
+			throw new IllegalArgumentException("Ride not found");
+		}
+
+		// Fetch the current driver and validate
+		Driver driver = getCurrentDriver();
+		if (driver == null) {
+			throw new IllegalArgumentException("Driver not authenticated");
+		}
+
+		if (!driver.equals(ride.getDriver())) {
+			throw new IllegalArgumentException("Driver cannot start this ride");
+		}
+
+		// Validate ride status
+		if (!RideStatus.ONGOING.equals(ride.getRideStatus())) {
+			throw new IllegalArgumentException("Ride is cannot be ended");
+		}
+		ride.setEndedAt(LocalDateTime.now());
+		Ride savedRide = rideService.updateRideStatus(ride, RideStatus.ENDED);
+		driverService.setDriverAvailability(rideId, true);
+		paymentService.processPayment(ride);
+		return modelMapper.map(savedRide, RideDTO.class);
 	}
 
 	@Override
@@ -81,51 +118,60 @@ public class DriverServiceOSRMImpl implements DriverService {
 
 	@Override
 	public DriverDTO getMyProfile() {
-		// TODO Auto-generated method stub
-		return null;
+		Driver driver = getCurrentDriver();
+		return modelMapper.map(driver, DriverDTO.class);
 	}
 
 	@Override
-	public List<RideDTO> getAllMyRide() {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<RideDTO> getAllMyDriverRide(PageRequest pageRequest) {
+		Driver driver = getCurrentDriver();
+		Page<Ride> rides = rideService.getAllRidesOfDriver(driver, pageRequest);
+		return rides.map(ride -> modelMapper.map(ride, RideDTO.class));
 	}
 
 	@Override
 	public RideDTO startRide(Long rideId, String otp) {
-	    // Fetch the ride and validate its existence
-	    Ride ride = riderService.getRideById(rideId);
-	    if (ride == null) {
-	        throw new IllegalArgumentException("Ride not found");
-	    }
+		// Fetch the ride and validate its existence
+		Ride ride = riderService.getRideById(rideId);
+		if (ride == null) {
+			throw new IllegalArgumentException("Ride not found");
+		}
 
-	    // Fetch the current driver and validate
-	    Driver driver = getCurrentDriver();
-	    if (driver == null) {
-	        throw new IllegalArgumentException("Driver not authenticated");
-	    }
+		// Fetch the current driver and validate
+		Driver driver = getCurrentDriver();
+		if (driver == null) {
+			throw new IllegalArgumentException("Driver not authenticated");
+		}
 
-	    if (!driver.equals(ride.getDriver())) {
-	        throw new IllegalArgumentException("Driver cannot start this ride");
-	    }
+		if (!driver.equals(ride.getDriver())) {
+			throw new IllegalArgumentException("Driver cannot start this ride");
+		}
 
-	    // Validate ride status
-	    if (!RideStatus.CONFIRMED.equals(ride.getRideStatus())) {
-	        throw new IllegalArgumentException("Ride is not confirmed");
-	    }
+		// Validate ride status
+		if (!RideStatus.CONFIRMED.equals(ride.getRideStatus())) {
+			throw new IllegalArgumentException("Ride is not confirmed");
+		}
 
-	    // Validate OTP
-	    if (!otp.trim().equals(ride.getOtp().trim())) {
-	        throw new IllegalArgumentException("OTP is not valid");
-	    }
+		// Validate OTP
+		if (!otp.trim().equals(ride.getOtp().trim())) {
+			throw new IllegalArgumentException("OTP is not valid");
+		}
+		paymentService.createNewPayment(ride);
+		// Update ride status and timestamp
+		ride.setStartedAt(LocalDateTime.now());
+		Ride updatedRide = rideService.updateRideStatus(ride, RideStatus.ONGOING);
 
-	    // Update ride status and timestamp
-	    ride.setStartedAt(LocalDateTime.now());
-	    Ride updatedRide = rideService.updateRideStatus(ride, RideStatus.ONGOING);
-
-	    // Map updated ride to DTO and return
-	    return modelMapper.map(updatedRide, RideDTO.class);
+		// Map updated ride to DTO and return
+		return modelMapper.map(updatedRide, RideDTO.class);
 	}
 
+	@Override
+	public Driver setDriverAvailability(Long driverId, Boolean Available) {
+		Driver driver = driverRepo.findById(driverId)
+		        .orElseThrow(() -> new RuntimeException("Driver not found"));		
+		driver.setAvailable(Available);
+		return driverRepo.save(driver);
+
+	}
 
 }

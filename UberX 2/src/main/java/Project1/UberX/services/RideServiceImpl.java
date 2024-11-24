@@ -3,6 +3,7 @@ package Project1.UberX.services;
 import java.util.Random;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +13,14 @@ import Project1.UberX.entity.Ride;
 import Project1.UberX.entity.RideRequest;
 import Project1.UberX.entity.RideRequestStatus;
 import Project1.UberX.entity.RideStatus;
+import Project1.UberX.entity.Rider;
 import Project1.UberX.repository.RideRepo;
-import Project1.UberX.repository.RideRequestRepo;
 
 @Service
 public class RideServiceImpl implements RideService {
 
 	private RideRepo rideRepo;
 	private ModelMapper modelMapper;
-	private RideRequestRepo rideRequestRepo;
 	private RideRequestService rideRequestService;
 
 	@Override
@@ -54,9 +54,8 @@ public class RideServiceImpl implements RideService {
 	}
 
 	@Override
-	public Ride getAllRidesOfRider(Long riderId, PageRequest pageRequest) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Ride> getAllRidesOfRider(Rider rider, PageRequest pageRequest) {
+		return rideRepo.findByRider(rider, pageRequest);
 	}
 
 	private String generateRandomOTP() {
@@ -66,9 +65,7 @@ public class RideServiceImpl implements RideService {
 	}
 
 	@Override
-	public Driver getAllRidesOfDriver(Long driverId, PageRequest pageRequest) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<Ride> getAllRidesOfDriver(Driver driver, PageRequest pageRequest) {
+		return rideRepo.findByDriverId(driver, pageRequest);
 	}
-
 }
