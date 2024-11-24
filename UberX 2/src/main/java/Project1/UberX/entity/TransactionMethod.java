@@ -1,6 +1,6 @@
 package Project1.UberX.entity;
 
 public enum TransactionMethod {
-	BANKING, UBERXWALLET, PRIVATE
+	BANKING, UBERXWALLET, PRIVATE, RIDE
 
 }

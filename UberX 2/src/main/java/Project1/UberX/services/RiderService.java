@@ -3,6 +3,9 @@ package Project1.UberX.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
 import Project1.UberX.dto.RideDTO;
 import Project1.UberX.dto.RideRequestDTO;
 import Project1.UberX.dto.RiderDTO;
@@ -18,12 +21,14 @@ public interface RiderService {
 
 	RiderDTO getMyProfile();
 
-	List<RideDTO> getAllMyRide();
+	Page<RideDTO> getAllMyRide(PageRequest pageRequest);
 	
 	Rider createNewRider(Users user);
 	
 	Optional<Rider> getCurrentRider();
 	
 	Ride getRideById(Long rideId);
+	
+	RideDTO cancelRide(Long rideId);
 
 }

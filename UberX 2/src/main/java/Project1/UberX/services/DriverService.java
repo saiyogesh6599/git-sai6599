@@ -1,6 +1,7 @@
 package Project1.UberX.services;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import Project1.UberX.dto.DriverDTO;
 import Project1.UberX.dto.RideDTO;
@@ -21,10 +22,12 @@ public interface DriverService {
 	
 	DriverDTO getMyProfile();
 	
-	List<RideDTO> getAllMyRide();
+    Page<RideDTO> getAllMyDriverRide(PageRequest pageRequest);
 	
 	Driver getCurrentDriver();
 
 	RideDTO startRide(Long rideId, String otp);	
+	
+	Driver setDriverAvailability (Long driverId, Boolean Available);
 	
 }
