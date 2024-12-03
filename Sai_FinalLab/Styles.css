@@ -1,0 +1,164 @@
+* {
+  margin: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 2;
+  background-color: #DFC5FE; 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: black;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.black-box {
+  background-color: #F5D480;
+}
+.properties.black-box {
+  color: black;
+  text-decoration: none;
+  padding:0;
+  border-radius:0;
+      background-color: #F5D480;
+      margin-right: 0px;
+
+}
+
+header {
+  text-align: center; 
+  padding: 50px 0px;
+}
+
+.header-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+  z-index: 1; /* Ensure the text is on top of the image */
+}
+
+
+/* Image Slider Styles */
+.slider {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  height: 500px; /* Adjust as needed */
+ margin-top: -100px;
+}
+
+.slider-img {
+    margin: 5px;
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+
+.slider-img:first-child {
+  opacity: 1;
+    margin: 5px;
+  padding: 5px;
+}
+
+/* Other Content Styles */
+section {
+  padding: 40px 20px;
+  text-align: left;
+}
+
+section h2 {
+  font-size: 24px;
+  color: black;
+  margin-bottom: 20px;
+      text-align: center;
+
+}
+section p {
+font-family: Arial, sans-serif;
+  font-size: 19px;
+}
+
+.contact-info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contact-box {
+      font-size: 15px;
+  display: flex;
+    padding: 8px 12px;
+  border-radius: 5px;
+  align-items: center;
+  margin-right: 10px;
+  margin-bottom: 10px; 
+}
+
+.contact-box img {
+  width: 30px; 
+  height: 30px; 
+  margin-right: 5px; 
+}
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+

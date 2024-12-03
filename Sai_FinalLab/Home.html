@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yogesh Properties - Rental Properties</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="Home.html" class="black-box">Home</a></li>
+        <li><a href="aboutUs.html" class="black-box">About Us</a>
+      <li><a href="properties.html" class="black-box">Rentals</a></li>
+      <li><a href="Contact.html" class="black-box">Contact Us</a></li>
+    </ul>
+    </nav>
+  <header>
+   <div class="header-text">
+      <h1>Welcome to Yogesh Properties</h1>
+      <p>Find your perfect rental property with us!</p>
+    </div>
+  </header>
+
+  <div class="slider">
+    <img class="slider-img" src="images/wonderful-house-1920x1080-wallpaper-13558.jpg" alt="Property Image 1">
+    <img class="slider-img" src="images/Hall.jpg" alt="Property Image 2">
+    <img class="slider-img" src="images/bed.jpg" alt="Property Image 3">
+      <img class="slider-img" src="images/kitchen.jpg" alt="Property Image 4">
+  </div>
+        <section class="properties black-box">
+
+    <h2>My Rentals </h2>
+      </section>
+        <section class="properties">
+
+    <p>It warms our hearts to have you join us. We're beyond thrilled to be your hosts in this wonderful city, where hospitality isn't just a duty—it's our passion.
+
+Our goal is simple: to provide you with a place to unwind, recharge, and create beautiful memories. So, settle in, let go of the outside world, and bask in the joy of togetherness.
+
+Whether you're here to explore the local treasures or simply revel in relaxation, know that our home is yours to enjoy. So, kick back, make yourself at home, and let the gentle spirit of Magnolia B&B embrace you.
+
+Here's to laughter, relaxation, and the magic of shared moments. Welcome home.</p>
+  </section>
+<footer class="footer">
+    <div class="footer-container">
+      <div class="contact-info">
+        <div class="contact-box">
+          <img src="images/images.png" alt="Email Icon">
+          <p>skamarthi@eiu.edu</p>
+        </div>
+        <div class="contact-box">
+          <img src="images/images-1.png" alt="Phone Icon">
+          <p>+1234567890</p>
+        </div>
+        <div class="contact-box">
+          <img src="images/pngtree-pin-location-icon-with-folded-map-png-image_7581594.png" alt="Location Icon">
+          <p> Apt#4 1515 9th st 61920-IL</p>
+        </div>
+     <div class="contact-box">
+          <img src="images/facebook-2.png" alt="Location Icon">
+          <p>YogeshRentals.com</p>
+        </div>
+           </div>
+    </div>
+  </footer>
+ <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".slider-img");
+    const slideCount = slides.length;
+
+    function showSlide(n) {
+      slides.forEach(slide => slide.style.opacity = 0);
+      slides[n].style.opacity = 1;
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slideCount;
+      showSlide(currentSlide);
+    }
+
+    setInterval(nextSlide, 3000); 
+  </script>
+</body>
+</html>

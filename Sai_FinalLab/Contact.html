@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yogesh Properties - Rental Properties</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="Home.html" class="black-box">Home</a></li>
+        <li><a href="AboutUs.html" class="black-box">About Us</a>
+      <li><a href="properties.html" class="black-box">Rentals</a></li>
+      <li><a href="Contact.html" class="black-box">Contact Us</a></li>
+    </ul>
+    </nav>
+  <!-- Contact Form Section -->
+  <section class="contact-form">
+    <h2>Contact Us</h2>
+    <form id="contactForm" action="submit.php" method="POST">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="comments">Comments:</label>
+        <textarea id="comments" name="comments" rows="4" required></textarea>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+    <div id="successMessage" style="display: none;">
+      <p>Form submitted successfully! Thank you for contacting us.</p>
+    </div>
+  </section>
+
+<footer class="footer">
+    <div class="footer-container">
+      <div class="contact-info">
+        <div class="contact-box">
+          <img src="images/images.png" alt="Email Icon">
+          <p>skamarthi@eiu.edu</p>
+        </div>
+        <div class="contact-box">
+          <img src="images/images-1.png" alt="Phone Icon">
+          <p>+1234567890</p>
+        </div>
+        <div class="contact-box">
+          <img src="images/pngtree-pin-location-icon-with-folded-map-png-image_7581594.png" alt="Location Icon">
+          <p> Apt#4 1515 9th st 61920-IL</p>
+        </div>
+     <div class="contact-box">
+          <img src="images/facebook-2.png" alt="Location Icon">
+          <p>YogeshRentals.com</p>
+        </div>
+           </div>
+    </div>
+  </footer>
+      
+</body>
+</html>
