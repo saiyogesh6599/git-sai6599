@@ -1,29 +1,26 @@
-package Project1.UberX.services;
+package com.codingshuttle.project.uber.uberApp.services;
 
-import java.util.Optional;
+import com.codingshuttle.project.uber.uberApp.entities.Ride;
+import com.codingshuttle.project.uber.uberApp.entities.User;
+import com.codingshuttle.project.uber.uberApp.entities.Wallet;
+import com.codingshuttle.project.uber.uberApp.entities.enums.TransactionMethod;
 
-import org.springframework.stereotype.Service;
-
-import Project1.UberX.entity.Ride;
-import Project1.UberX.entity.TransactionType;
-import Project1.UberX.entity.Users;
-import Project1.UberX.entity.Wallet;
-
-@Service
 public interface WalletService {
 
-	void getMyMoneyFromWallet();
+    Wallet addMoneyToWallet(User user, Double amount,
+                            String transactionId, Ride ride,
+                            TransactionMethod transactionMethod);
 
-	Optional<Wallet> findWalletById(Long walletId);
+    Wallet deductMoneyFromWallet(User user, Double amount,
+                                 String transactionId, Ride ride,
+                                 TransactionMethod transactionMethod);
 
-	Wallet withDrawAllMyMoneyFromWallet();
+    void withdrawAllMyMoneyFromWallet();
 
-	Wallet findByUser(Users user);
+    Wallet findWalletById(Long walletId);
 
-	Wallet deductMoneyFromWallet(Users user, Double amount, Ride ride, TransactionType transactionType);
+    Wallet createNewWallet(User user);
 
-	Wallet createNewWallet(Users user);
-
-	Wallet addMoneyToWallet(Users user, double amount, Ride ride, TransactionType transactionType);
+    Wallet findByUser(User user);
 
 }

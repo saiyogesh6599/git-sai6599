@@ -1,20 +1,18 @@
-package Project1.UberX.dto;
+package com.codingshuttle.project.uber.uberApp.dto;
+
+import lombok.Data;
 
 import java.util.List;
 
-import Project1.UberX.entity.WalletTransactions;
-import lombok.Data;
-
 @Data
-public class WalletDTO {
+public class WalletDto {
 
-	private Long Id;
-	
-	private UserDTO userDTO;
-	
-	private Double balance;
-	
-	private List<WalletTransactions> transactions;
-	
-	
+    private Long id;
+
+    private UserDto user;
+
+    private Double balance;
+
+    private List<WalletTransactionDto> transactions;
+
 }

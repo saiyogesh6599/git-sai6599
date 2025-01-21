@@ -1,18 +1,14 @@
-package Project1.UberX.services;
+package com.codingshuttle.project.uber.uberApp.services;
 
-import org.springframework.stereotype.Service;
+import com.codingshuttle.project.uber.uberApp.entities.Payment;
+import com.codingshuttle.project.uber.uberApp.entities.Ride;
+import com.codingshuttle.project.uber.uberApp.entities.enums.PaymentStatus;
 
-import Project1.UberX.entity.Payment;
-import Project1.UberX.entity.PaymentStatus;
-import Project1.UberX.entity.Ride;
-
-@Service
 public interface PaymentService {
 
+    void processPayment(Ride ride);
 
-	Payment createNewPayment(Ride ride);
+    Payment createNewPayment(Ride ride);
 
-	void updatePaymentStatus(Payment payment, PaymentStatus paymentStatus);
-
-	void processPayment(Ride ride);
+    void updatePaymentStatus(Payment payment, PaymentStatus status);
 }

@@ -1,13 +1,10 @@
-package Project1.UberX.services;
+package com.codingshuttle.project.uber.uberApp.services;
 
-import org.springframework.stereotype.Service;
+import com.codingshuttle.project.uber.uberApp.entities.RideRequest;
 
-import Project1.UberX.entity.RideRequest;
-
-@Service
 public interface RideRequestService {
 
-	RideRequest findRideRequestById(Long rideRequestId);
+    RideRequest findRideRequestById(Long rideRequestId);
 
-	void update(RideRequest rideRequest);
+    void update(RideRequest rideRequest);
 }

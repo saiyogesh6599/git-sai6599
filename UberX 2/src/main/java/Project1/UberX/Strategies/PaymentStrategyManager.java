@@ -1,17 +1,22 @@
-package Project1.UberX.Strategies;
+package com.codingshuttle.project.uber.uberApp.strategies;
 
-import Project1.UberX.entity.PaymentMethod;
+import com.codingshuttle.project.uber.uberApp.entities.enums.PaymentMethod;
+import com.codingshuttle.project.uber.uberApp.strategies.impl.CashPaymentStrategy;
+import com.codingshuttle.project.uber.uberApp.strategies.impl.WalletPaymentStrategy;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
+@RequiredArgsConstructor
 public class PaymentStrategyManager {
 
-	private WalletPaymentStrategies walletPaymenStrategies;
-	private CashPaymentStrategies cashPaymentStrategies;
-	
-	public PaymentStrategies paymentStrategy(PaymentMethod paymentMethod) {
-	    return switch (paymentMethod) {
-	        case WALLET -> walletPaymenStrategies;
-	        case CASH -> cashPaymentStrategies;
-	        default -> throw new RuntimeException("Invalid payment");
-	    };
-	}
+    private final WalletPaymentStrategy walletPaymentStrategy;
+    private final CashPaymentStrategy cashPaymentStrategy;
+
+    public PaymentStrategy paymentStrategy(PaymentMethod paymentMethod) {
+        return switch (paymentMethod) {
+            case WALLET -> walletPaymentStrategy;
+            case CASH -> cashPaymentStrategy;
+        };
+    }
 }

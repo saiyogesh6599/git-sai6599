@@ -1,113 +1,35 @@
-package Project1.UberX.dto;
+package com.codingshuttle.project.uber.uberApp.dto;
+
+import com.codingshuttle.project.uber.uberApp.entities.Ride;
+import com.codingshuttle.project.uber.uberApp.entities.Wallet;
+import com.codingshuttle.project.uber.uberApp.entities.enums.TransactionMethod;
+import com.codingshuttle.project.uber.uberApp.entities.enums.TransactionType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import lombok.Builder;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-
-import Project1.UberX.entity.TransactionMethod;
-import Project1.UberX.entity.TransactionType;
-import lombok.Data;
 
 @Data
-public class WalletTransactionDTO {
+@Builder
+public class WalletTransactionDto {
 
-	private Long Id;
+    private Long id;
 
-	public Long getId() {
-		return Id;
-	}
+    private Double amount;
 
-	public void setId(Long id) {
-		Id = id;
-	}
+    private TransactionType transactionType;
 
-	public WalletTransactionDTO() {
-	}
+    private TransactionMethod transactionMethod;
 
-	public WalletTransactionDTO(Long id, Double amount, TransactionType transactionType,
-			TransactionMethod transactionMethod, RideDTO ride, String transactionId, WalletDTO walletDTO,
-			LocalDateTime localDateTime) {
-		Id = id;
-		this.amount = amount;
-		this.transactionType = transactionType;
-		this.transactionMethod = transactionMethod;
-		this.ride = ride;
-		this.transactionId = transactionId;
-		this.walletDTO = walletDTO;
-		this.localDateTime = localDateTime;
-	}
+    private RideDto ride;
 
-	public Double getAmount() {
-		return amount;
-	}
+    private String transactionId;
 
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
+    private WalletDto wallet;
 
-	public TransactionType getTransactionType() {
-		return transactionType;
-	}
-
-	public void setTransactionType(TransactionType transactionType) {
-		this.transactionType = transactionType;
-	}
-
-	public TransactionMethod getTransactionMethod() {
-		return transactionMethod;
-	}
-
-	public void setTransactionMethod(TransactionMethod transactionMethod) {
-		this.transactionMethod = transactionMethod;
-	}
-
-	public RideDTO getRide() {
-		return ride;
-	}
-
-	public void setRide(RideDTO ride) {
-		this.ride = ride;
-	}
-
-	public String getTransactionId() {
-		return transactionId;
-	}
-
-	public void setTransactionId(String transactionId) {
-		this.transactionId = transactionId;
-	}
-
-	public WalletDTO getWalletDTO() {
-		return walletDTO;
-	}
-
-	public void setWalletDTO(WalletDTO walletDTO) {
-		this.walletDTO = walletDTO;
-	}
-
-	public LocalDateTime getLocalDateTime() {
-		return localDateTime;
-	}
-
-	public void setLocalDateTime(LocalDateTime localDateTime) {
-		this.localDateTime = localDateTime;
-	}
-
-	private Double amount;
-
-	private TransactionType transactionType;
-
-	private TransactionMethod transactionMethod;
-
-	private RideDTO ride;
-
-	private String transactionId;
-
-	private WalletDTO walletDTO;
-
-	private LocalDateTime localDateTime;
-
-	public void setTransactionDate(Date date) {
-		
-	}
+    private LocalDateTime timeStamp;
 
 }

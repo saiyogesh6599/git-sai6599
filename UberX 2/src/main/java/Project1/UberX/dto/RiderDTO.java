@@ -1,43 +1,15 @@
-package Project1.UberX.dto;
+package com.codingshuttle.project.uber.uberApp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class RiderDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class RiderDto {
 
-	private Long id;
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	private UserDTO user;
-	private Double rating;
-
-	public UserDTO getUser() {
-		return user;
-	}
-
-	public void setUser(UserDTO user) {
-		this.user = user;
-	}
-
-	public Double getRating() {
-		return rating;
-	}
-
-	public void setRating(Double rating) {
-		this.rating = rating;
-	}
-
-	public RiderDTO(UserDTO user, Double rating) {
-		this.user = user;
-		this.rating = rating;
-	}
-
-	public RiderDTO() {
-	}
+    private Long id;
+    private UserDto user;
+    private Double rating;
 }

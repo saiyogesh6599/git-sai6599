@@ -1,19 +1,18 @@
-package Project1.UberX.utils;
+package com.codingshuttle.project.uber.uberApp.utils;
 
+import com.codingshuttle.project.uber.uberApp.dto.PointDto;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
 
-import Project1.UberX.dto.PointDTO;
-import lombok.experimental.UtilityClass;
-
-@UtilityClass
 public class GeometryUtil {
 
-	public static org.locationtech.jts.geom.Point createPoint(PointDTO pointDto) {
-		GeometryFactory geoF = new GeometryFactory(new PrecisionModel(), 4326);
-		Coordinate coordinate = new Coordinate(pointDto.getCoordinates()[0], pointDto.getCoordinates()[1]);
-		return geoF.createPoint(coordinate);
-
-	}
+    public static Point createPoint(PointDto pointDto) {
+        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), 4326);
+        Coordinate coordinate = new Coordinate(pointDto.getCoordinates()[0],
+                pointDto.getCoordinates()[1]
+                );
+        return geometryFactory.createPoint(coordinate);
+    }
 }

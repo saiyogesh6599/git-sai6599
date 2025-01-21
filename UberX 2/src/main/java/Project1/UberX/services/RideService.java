@@ -1,27 +1,23 @@
-package Project1.UberX.services;
+package com.codingshuttle.project.uber.uberApp.services;
 
+import com.codingshuttle.project.uber.uberApp.dto.RideRequestDto;
+import com.codingshuttle.project.uber.uberApp.entities.Driver;
+import com.codingshuttle.project.uber.uberApp.entities.Ride;
+import com.codingshuttle.project.uber.uberApp.entities.RideRequest;
+import com.codingshuttle.project.uber.uberApp.entities.Rider;
+import com.codingshuttle.project.uber.uberApp.entities.enums.RideStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import Project1.UberX.dto.RideRequestDTO;
-import Project1.UberX.entity.Driver;
-import Project1.UberX.entity.Ride;
-import Project1.UberX.entity.RideRequest;
-import Project1.UberX.entity.RideStatus;
-import Project1.UberX.entity.Rider;
-
 public interface RideService {
 
-	Ride getRideById(Long rideId);
+    Ride getRideById(Long rideId);
 
-	void matchWithDrivers(RideRequestDTO rideRequestDTO);
+    Ride createNewRide(RideRequest rideRequest, Driver driver);
 
-	Ride updateRideStatus(Ride ride, RideStatus rideStatus);
+    Ride updateRideStatus(Ride ride, RideStatus rideStatus);
 
-	Page<Ride> getAllRidesOfRider(Rider rider, PageRequest pageRequest);
+    Page<Ride> getAllRidesOfRider(Rider rider, PageRequest pageRequest);
 
-	public Page<Ride> getAllRidesOfDriver(Driver driver, PageRequest pageRequest);
-
-	Ride createNewRide(RideRequest rideRequest, Driver driver);
-
+    Page<Ride> getAllRidesOfDriver(Driver driver, PageRequest pageRequest);
 }

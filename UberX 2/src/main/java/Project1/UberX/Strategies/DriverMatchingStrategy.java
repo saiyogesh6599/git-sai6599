@@ -1,11 +1,11 @@
-package Project1.UberX.Strategies;
+package com.codingshuttle.project.uber.uberApp.strategies;
+
+import com.codingshuttle.project.uber.uberApp.entities.Driver;
+import com.codingshuttle.project.uber.uberApp.entities.RideRequest;
 
 import java.util.List;
 
-import Project1.UberX.entity.Driver;
-import Project1.UberX.entity.RideRequest;
-
 public interface DriverMatchingStrategy {
 
-	List<Driver> findDriver(RideRequest rideRequest);
+    List<Driver> findMatchingDriver(RideRequest rideRequest);
 }

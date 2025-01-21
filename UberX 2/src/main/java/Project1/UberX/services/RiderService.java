@@ -1,34 +1,29 @@
-package Project1.UberX.services;
+package com.codingshuttle.project.uber.uberApp.services;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.codingshuttle.project.uber.uberApp.dto.DriverDto;
+import com.codingshuttle.project.uber.uberApp.dto.RideDto;
+import com.codingshuttle.project.uber.uberApp.dto.RideRequestDto;
+import com.codingshuttle.project.uber.uberApp.dto.RiderDto;
+import com.codingshuttle.project.uber.uberApp.entities.Rider;
+import com.codingshuttle.project.uber.uberApp.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import Project1.UberX.dto.RideDTO;
-import Project1.UberX.dto.RideRequestDTO;
-import Project1.UberX.dto.RiderDTO;
-import Project1.UberX.entity.Ride;
-import Project1.UberX.entity.Rider;
-import Project1.UberX.entity.Users;
+import java.util.List;
 
 public interface RiderService {
 
-	RideRequestDTO requestRide(RideRequestDTO rideRequestDTO);
+    RideRequestDto requestRide(RideRequestDto rideRequestDto);
 
-	RiderDTO rateDriver(Long rideId, Double rating);
+    RideDto cancelRide(Long rideId);
 
-	RiderDTO getMyProfile();
+    DriverDto rateDriver(Long rideId, Integer rating);
 
-	Page<RideDTO> getAllMyRide(PageRequest pageRequest);
-	
-	Rider createNewRider(Users user);
-	
-	Optional<Rider> getCurrentRider();
-	
-	Ride getRideById(Long rideId);
-	
-	RideDTO cancelRide(Long rideId);
+    RiderDto getMyProfile();
 
+    Page<RideDto> getAllMyRides(PageRequest pageRequest);
+
+    Rider createNewRider(User user);
+
+    Rider getCurrentRider();
 }
