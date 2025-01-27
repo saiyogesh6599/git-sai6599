@@ -6,6 +6,8 @@ phases:
       java: corretto21
     commands:
       - echo Installing Maven...
+      - echo "Listing files in CODEBUILD_SRC_DIR..."
+      - ls -R $CODEBUILD_SRC_DIR
   pre_build:
     commands:
       - echo Logging in to Docker hub...
@@ -24,3 +26,4 @@ artifacts:
 cache:
   paths:
     - '/root/.m2/**/*'
+    
