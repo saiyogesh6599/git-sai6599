@@ -96,11 +96,11 @@
 			<artifactId>flyway-database-postgresql</artifactId>
 		</dependency>
 	</dependencies>
-	<distributionManagement>
+<distributionManagement>
   <repository>
     <id>github</id>
-    <name>saiyogesh6599</name>
-    <url>https://github.com/saiyogesh6599/git-sai6599/tree/Master/TestingApp</url>
+    <name>GitHub Packages</name>
+    <url>https://maven.pkg.github.com/saiyogesh6599/git-sai6599</url>
   </repository>
 </distributionManagement>
 	<build>
