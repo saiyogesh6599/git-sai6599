@@ -37,7 +37,6 @@ artifacts:
   files:
     - 'TestingApp/target/*.jar'  # Match all subdirectories for JAR
   discard-paths: yes
-
 cache:
   paths:
     - '/root/.m2/**/*'
