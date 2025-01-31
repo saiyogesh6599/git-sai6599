@@ -17,9 +17,13 @@ phases:
       - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
 
   build:
-    commands:
-      - echo Building, Testing, and packaging the application...
-      - mvn clean package -DskipTests
+  commands:
+    - echo "Building and packaging..."
+    - mvn -f TestingApp/pom.xml clean package -DskipTests || { echo "Maven build failed!"; exit 1; }
+    - echo "Checking for target directory after build..."
+    - find . -type d -name "target"
+    - echo "Checking for JAR files after build..."
+    - find . -name "*.jar"
 
   post_build:
     commands:
