@@ -1,0 +1,39 @@
+version: 0.2
+labels:
+  buildspec-override: true
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto23
+    commands:
+      - echo Installing Maven...
+      - echo "Listing files in CODEBUILD_SRC_DIR..."
+      - ls -R $CODEBUILD_SRC_DIR
+
+  pre_build:
+    commands:
+      - echo Logging in to Docker hub...
+      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+  build:
+    commands:
+      - echo Building, Testing, and packaging the application...
+      - mvn package
+
+  post_build:
+    commands:
+      - echo "Build, Testing, and packaging completed."
+      - echo "Checking for target directory..."
+      - find . -type d -name "target"
+      - echo "Listing files in target..."
+      - find . -name "*.jar"
+
+artifacts:
+  files:
+    - '**/target/*.jar'  # Match all subdirectories for JAR
+  discard-paths: yes
+
+cache:
+  paths:
+    - '/root/.m2/**/*'
