@@ -31,7 +31,7 @@ phases:
 
 artifacts:
   files:
-    - '**/target/*.jar'  # Match all subdirectories for JAR
+    - 'TestingApp/target/*.jar'  # Match all subdirectories for JAR
   discard-paths: yes
 
 cache:
