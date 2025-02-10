@@ -1,10 +1,19 @@
 version: 0.2
+<<<<<<< HEAD
 labels:
   buildspec-override: true
+=======
+<<<<<<< HEAD:buildspec.yml
+=======
+labels:
+  buildspec-override: true
+>>>>>>> b0a0dea (new changes in buildspec.yml):TestingApp/buildspec.yml
+>>>>>>> 3649194 (new changes)
 
 phases:
   install:
     runtime-versions:
+<<<<<<< HEAD
       java: corretto23
     commands:
       - echo "Installing Maven..."
@@ -27,11 +36,47 @@ phases:
       - echo "Checking for target directory..."
       - find . -type d -name "target"
       - echo "Checking for JAR files..."
+=======
+<<<<<<< HEAD:buildspec.yml
+      java: corretto21
+  build:
+    commands:
+      - echo Building, Testing and packaging the application...
+      - mvn package -DskipTests
+=======
+      java: corretto23
+    commands:
+      - echo Installing Maven...
+      - echo "Listing files in CODEBUILD_SRC_DIR..."
+      - ls -R $CODEBUILD_SRC_DIR
+
+  pre_build:
+    commands:
+      - echo Logging in to Docker hub...
+      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+
+  build:
+    commands:
+      - echo Building, Testing, and packaging the application...
+      - mvn package
+
+>>>>>>> b0a0dea (new changes in buildspec.yml):TestingApp/buildspec.yml
+  post_build:
+    commands:
+      - echo "Build, Testing, and packaging completed."
+      - echo "Checking for target directory..."
+      - find . -type d -name "target"
+      - echo "Listing files in target..."
+>>>>>>> 3649194 (new changes)
       - find . -name "*.jar"
 
 artifacts:
   files:
+<<<<<<< HEAD
     - 'TestingApp/target/*.jar'
+=======
+    - '**/target/*.jar'  # Match all subdirectories for JAR
+>>>>>>> 3649194 (new changes)
   discard-paths: yes
 
 cache:
