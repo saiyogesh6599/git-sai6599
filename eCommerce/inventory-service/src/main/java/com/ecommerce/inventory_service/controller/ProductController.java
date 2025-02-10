@@ -15,6 +15,7 @@ import com.ecommerce.inventory_service.clients.OrdersFiegnCleint;
 import com.ecommerce.inventory_service.dto.OrderRequestDto;
 import com.ecommerce.inventory_service.dto.ProductDto;
 import com.ecommerce.inventory_service.service.ProductService;
+import com.netflix.discovery.DiscoveryClient;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
@@ -31,28 +32,24 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductController {
 
 	private final ProductService productService;
+	private final DiscoveryClient discoveryClient;
 	private final RestClient restClient;
-	private final OrdersFiegnCleint ordersFiegnCleint;
+
+	private final OrdersFiegnCleint ordersFeignClient;
 
 	@GetMapping("/fetchOrders")
 	public String fetchFromOrdersService(HttpServletRequest httpServletRequest) {
 
 		log.info(httpServletRequest.getHeader("x-custom-header"));
 
-//		List<ServiceInstance> instances = discoveryClient.getInstances("order-service");
+//        ServiceInstance orderService = discoveryClient.getInstances("order-service").getFirst();
 
-//		if (instances.isEmpty()) {
-//			throw new RuntimeException("No instances found for order-service");
-//		}
-//
-//		ServiceInstance orderService = instances.get(0);
-//		String orderServiceUrl = orderService.getUri().toString() + "/orders/core/helloOrders";
-//
-//		log.info("Calling ORDER-SERVICE at: {}", orderServiceUrl);
-//
-//		return restClient.get().uri(orderServiceUrl).retrieve().body(String.class);
+//        return restClient.get()
+//                .uri(orderService.getUri()+"/orders/core/helloOrders")
+//                .retrieve()
+//                .body(String.class);
 
-		return ordersFiegnCleint.helloOrders();
+		return ordersFeignClient.helloOrders();
 	}
 
 	@GetMapping
@@ -72,4 +69,5 @@ public class ProductController {
 		Double totalPrice = productService.reduceStocks(orderRequestDto);
 		return ResponseEntity.ok(totalPrice);
 	}
+
 }

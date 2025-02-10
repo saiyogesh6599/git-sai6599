@@ -2,6 +2,8 @@ package com.ecommerce.order_service.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,37 +12,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecommerce.order_service.clients.InventoryOpenFeignClient;
+import com.ecommerce.order_service.config.FeaturesEnableConfig;
 import com.ecommerce.order_service.dto.OrderRequestDto;
 import com.ecommerce.order_service.service.OrderService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/core")
 @RequiredArgsConstructor
 @Slf4j
-@Getter
-@Setter
+@RefreshScope
 public class OrderController {
 
 	private final OrderService orderService;
-	private final InventoryOpenFeignClient inventoryOpenFeignClient;
+
+	@Value("${my.variable}")
+	private String myVariable;
+
+	private final FeaturesEnableConfig featuresEnableConfig;
 
 	@GetMapping("/helloOrders")
 	public String helloOrders() {
-		return "Hello from Orders Service";
+
+		if (featuresEnableConfig.isUserTrackingEnabled()) {
+			return "User tracking enabled wohoo, my variable is: " + myVariable;
+		} else {
+			return "User tracking disabled awww, my variable is: " + myVariable;
+		}
 	}
 
-//	@PostMapping("/create-order")
-//	public ResponseEntity<OrderRequestDto> createOrder(@RequestBody OrderRequestDto orderRequestDto) {
-//		OrderRequestDto orderRequestDto1 = orderService.createOrder(orderRequestDto);
-//		return ResponseEntity.ok(orderRequestDto1);
-//	}
+	@PostMapping("/create-order")
+	public ResponseEntity<OrderRequestDto> createOrder(@RequestBody OrderRequestDto orderRequestDto) {
+		OrderRequestDto orderRequestDto1 = orderService.createOrder(orderRequestDto);
+		return ResponseEntity.ok(orderRequestDto1);
+	}
 
 	@GetMapping
 	public ResponseEntity<List<OrderRequestDto>> getAllOrders(HttpServletRequest httpServletRequest) {
@@ -54,12 +63,5 @@ public class OrderController {
 		log.info("Fetching order with ID: {} via controller", id);
 		OrderRequestDto order = orderService.getOrderById(id);
 		return ResponseEntity.ok(order); // Returns 200 OK with the order
-	}
-	@PostMapping("/create-order")
-	public ResponseEntity<OrderRequestDto> createOrder(@RequestBody OrderRequestDto orderRequestDto){
-		log.info("Inside create order:{}",orderRequestDto);
-		OrderRequestDto orderRequestDto2= orderService.createOrder(orderRequestDto);
-		return ResponseEntity.ok(orderRequestDto2);
-		
 	}
 }
