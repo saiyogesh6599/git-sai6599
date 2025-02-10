@@ -1,0 +1,10 @@
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/InventoryServiceApplication.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/clients/OrdersFiegnCleint.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/config/AppConfig.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/controller/ProductController.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/dto/OrderRequestDto.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/dto/OrderRequestItemDto.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/dto/ProductDto.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/entity/Product.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/repository/ProductRepository.java
+/Users/saiyogesh/eclipse-workspace/SaiYogeshJava/src/SaiP/eCommerce/inventory-service/src/main/java/com/ecommerce/inventory_service/service/ProductService.java

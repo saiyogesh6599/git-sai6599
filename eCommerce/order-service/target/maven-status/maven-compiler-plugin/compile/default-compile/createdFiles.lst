@@ -1,0 +1,11 @@
+com/ecommerce/order_service/dto/OrderRequestItemDto.class
+com/ecommerce/order_service/entity/OrderItem.class
+com/ecommerce/order_service/clients/InventoryOpenFeignClient.class
+com/ecommerce/order_service/controller/OrderController.class
+com/ecommerce/order_service/repository/OrderRepository.class
+com/ecommerce/order_service/entity/OrderStatus.class
+com/ecommerce/order_service/dto/OrderRequestDto.class
+com/ecommerce/order_service/entity/Orders.class
+com/ecommerce/order_service/config/AppConfig.class
+com/ecommerce/order_service/OrderServiceApplication.class
+com/ecommerce/order_service/service/OrderService.class
